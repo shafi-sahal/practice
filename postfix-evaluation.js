@@ -1,11 +1,13 @@
-const evaluatePostfix = expression => {
+const evaluatePostfix = (expression, substitutes) => {
     let stack = [];
     for (let i = 0; i < expression.length; i++) {
         let char = expression[i];
 
         if (!isNaN(parseInt(char))) {
             stack.push(parseInt(char));
-            console.log(stack);
+        } else if (/[A-Za-z]/.test(char)) {
+            char = substitutes[char];
+            stack.push(parseInt(char));
         } else {
             let num1 = stack.pop();
             let num2 = stack.pop();
@@ -28,4 +30,4 @@ const evaluatePostfix = expression => {
     }
     return stack.pop();
 }
-console.log(evaluatePostfix("231*+9-"));
+console.log(evaluatePostfix("x4*y5*+", {x : 3, y : 2}));
